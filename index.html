@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SubnetMaster — Master Subnetting Fast</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="bg-grid"></div>
+  <div class="scanline"></div>
+
+  <header>
+    <div class="logo">
+      <span class="logo-icon">⬡</span>
+      <span class="logo-text">SubnetMaster</span>
+    </div>
+    <nav class="tab-bar">
+      <button class="tab active" data-tab="cheatsheet">Cheat Sheet</button>
+      <button class="tab" data-tab="visual">Bit Visualizer</button>
+      <button class="tab" data-tab="technique">Techniques</button>
+      <button class="tab" data-tab="calc">Calculator</button>
+      <button class="tab" data-tab="quiz">Drill</button>
+    </nav>
+  </header>
+
+  <main>
+    <!-- CHEAT SHEET -->
+    <section id="cheatsheet" class="section active">
+      <div class="section-header">
+        <h1>Cheat Sheet</h1>
+        <p>The numbers you must know cold. Everything else derives from these.</p>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-label">Magic Numbers — Powers of 2</div>
+          <table>
+            <thead>
+              <tr><th>2ⁿ</th><th>Value</th><th>Hosts (−2)</th><th>CIDR</th><th>Block</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>2²</td><td>4</td><td>2</td><td><span class="badge red">/30</span></td><td>4</td></tr>
+              <tr><td>2³</td><td>8</td><td>6</td><td><span class="badge orange">/29</span></td><td>8</td></tr>
+              <tr><td>2⁴</td><td>16</td><td>14</td><td><span class="badge orange">/28</span></td><td>16</td></tr>
+              <tr><td>2⁵</td><td>32</td><td>30</td><td><span class="badge yellow">/27</span></td><td>32</td></tr>
+              <tr><td>2⁶</td><td>64</td><td>62</td><td><span class="badge green">/26</span></td><td>64</td></tr>
+              <tr><td>2⁷</td><td>128</td><td>126</td><td><span class="badge green">/25</span></td><td>128</td></tr>
+              <tr><td>2⁸</td><td>256</td><td>254</td><td><span class="badge cyan">/24</span></td><td>256</td></tr>
+              <tr><td>2¹⁶</td><td>65,536</td><td>65,534</td><td><span class="badge blue">/16</span></td><td>65,536</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="card">
+          <div class="card-label">CIDR ↔ Mask ↔ Block Size</div>
+          <table>
+            <thead>
+              <tr><th>CIDR</th><th>Last Octet</th><th>Block</th><th>Subnets/24</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><span class="badge green">/25</span></td><td class="mono">128</td><td class="mono">128</td><td class="mono">2</td></tr>
+              <tr><td><span class="badge green">/26</span></td><td class="mono">192</td><td class="mono">64</td><td class="mono">4</td></tr>
+              <tr><td><span class="badge yellow">/27</span></td><td class="mono">224</td><td class="mono">32</td><td class="mono">8</td></tr>
+              <tr><td><span class="badge orange">/28</span></td><td class="mono">240</td><td class="mono">16</td><td class="mono">16</td></tr>
+              <tr><td><span class="badge orange">/29</span></td><td class="mono">248</td><td class="mono">8</td><td class="mono">32</td></tr>
+              <tr><td><span class="badge red">/30</span></td><td class="mono">252</td><td class="mono">4</td><td class="mono">64</td></tr>
+            </tbody>
+          </table>
+          <div class="tip">
+            <span class="tip-label">KEY RULE</span>
+            Block size = <strong>256 − mask octet</strong>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid-3">
+        <div class="card compact">
+          <div class="card-label">Mask Values</div>
+          <div class="pill-row">
+            <span class="pill">128</span>
+            <span class="pill">192</span>
+            <span class="pill">224</span>
+            <span class="pill">240</span>
+            <span class="pill">248</span>
+            <span class="pill">252</span>
+            <span class="pill">254</span>
+            <span class="pill">255</span>
+          </div>
+          <p class="note">These are the only valid octet values in a subnet mask.</p>
+        </div>
+
+        <div class="card compact">
+          <div class="card-label">Core Formulas</div>
+          <div class="formula-list">
+            <div class="formula"><span class="f-name">Hosts</span><span class="f-val">2ʰ − 2</span></div>
+            <div class="formula"><span class="f-name">Subnets</span><span class="f-val">2ˢ</span></div>
+            <div class="formula"><span class="f-name">Block</span><span class="f-val">256 − mask</span></div>
+            <div class="formula"><span class="f-name">Broadcast</span><span class="f-val">next net − 1</span></div>
+          </div>
+        </div>
+
+        <div class="card compact">
+          <div class="card-label">Private Ranges</div>
+          <div class="formula-list">
+            <div class="formula"><span class="f-name mono">10.0.0.0</span><span class="f-val"><span class="badge blue">/8</span></span></div>
+            <div class="formula"><span class="f-name mono">172.16–31.x.x</span><span class="f-val"><span class="badge cyan">/12</span></span></div>
+            <div class="formula"><span class="f-name mono">192.168.x.x</span><span class="f-val"><span class="badge green">/16</span></span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BIT VISUALIZER -->
+    <section id="visual" class="section">
+      <div class="section-header">
+        <h1>Bit Visualizer</h1>
+        <p>Drag the slider to shift the prefix boundary. Network bits in <span class="hl-blue">blue</span>, host bits in <span class="hl-green">green</span>.</p>
+      </div>
+
+      <div class="card">
+        <div class="slider-row">
+          <label class="slider-label">Prefix /<span id="pfx-disp">24</span></label>
+          <input type="range" min="1" max="32" value="24" id="pfx-slider" />
+          <span class="slider-end" id="pfx-hosts">254 hosts</span>
+        </div>
+        <div id="bit-display" class="bit-display"></div>
+        <div class="bit-legend">
+          <span class="legend-item"><span class="legend-dot net"></span>Network bit (1)</span>
+          <span class="legend-item"><span class="legend-dot host"></span>Host bit (0)</span>
+          <span class="sep">|</span>
+          <span class="legend-item" id="legend-boundary"></span>
+        </div>
+      </div>
+
+      <div class="grid-3">
+        <div class="card stat-card">
+          <div class="stat-label">Subnet mask</div>
+          <div class="stat-val mono" id="vis-mask">255.255.255.0</div>
+        </div>
+        <div class="card stat-card">
+          <div class="stat-label">Usable hosts</div>
+          <div class="stat-val" id="vis-hosts">254</div>
+        </div>
+        <div class="card stat-card">
+          <div class="stat-label">Host bits</div>
+          <div class="stat-val" id="vis-hbits">8</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-label">Octet Bit Weight Reference</div>
+        <div class="weight-row">
+          <div class="weight-cell net"><div class="bit-box">1</div><div class="weight">128</div></div>
+          <div class="weight-cell net"><div class="bit-box">1</div><div class="weight">64</div></div>
+          <div class="weight-cell net"><div class="bit-box">1</div><div class="weight">32</div></div>
+          <div class="weight-cell net"><div class="bit-box">1</div><div class="weight">16</div></div>
+          <div class="weight-cell net"><div class="bit-box">1</div><div class="weight">8</div></div>
+          <div class="weight-cell host"><div class="bit-box">1</div><div class="weight">4</div></div>
+          <div class="weight-cell host"><div class="bit-box">0</div><div class="weight">2</div></div>
+          <div class="weight-cell host"><div class="bit-box">0</div><div class="weight">1</div></div>
+          <div class="weight-eq">= 128+64+32+16+8+4 = <strong>252</strong> → /30 mask</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TECHNIQUES -->
+    <section id="technique" class="section">
+      <div class="section-header">
+        <h1>4 Techniques</h1>
+        <p>Master these in order. Technique 1 alone solves 80% of exam questions.</p>
+      </div>
+
+      <div class="technique-grid">
+        <div class="card technique">
+          <div class="tech-num">01</div>
+          <div class="card-label">Block Size Shortcut</div>
+          <p class="tech-desc">Fastest method for CIDR ≥ /24. Works in your head in seconds.</p>
+          <ol class="steps">
+            <li>Find the <strong>interesting octet</strong> (not 255 or 0 in the mask)</li>
+            <li>Block size = <code>256 − mask octet</code></li>
+            <li>List multiples of block: 0, B, 2B, 3B…</li>
+            <li>IP's octet falls between two multiples → that's your subnet</li>
+            <li>Broadcast = next multiple − 1</li>
+          </ol>
+          <div class="example">
+            <div class="ex-label">Example</div>
+            <div class="ex-line mono">IP: 192.168.10.77 /27 → mask = 224</div>
+            <div class="ex-line mono">Block = 256−224 = <strong>32</strong></div>
+            <div class="ex-line mono">Multiples: 0, 32, <strong>64</strong>, 96… → 77 in 64–95</div>
+            <div class="ex-line mono result">Net: 192.168.10.64 | BC: 192.168.10.95</div>
+          </div>
+        </div>
+
+        <div class="card technique">
+          <div class="tech-num">02</div>
+          <div class="card-label">Count Host Bits</div>
+          <p class="tech-desc">Derive the mask from a prefix number instantly.</p>
+          <ol class="steps">
+            <li>Host bits h = <code>32 − prefix</code></li>
+            <li>Total addresses = <code>2ʰ</code>, usable = <code>2ʰ − 2</code></li>
+            <li>Zero out h bits from the right of the mask</li>
+          </ol>
+          <div class="example">
+            <div class="ex-label">Example</div>
+            <div class="ex-line mono">/26 → h = 32−26 = 6 host bits</div>
+            <div class="ex-line mono">2⁶ = 64 addresses → 62 hosts</div>
+            <div class="ex-line mono result">Mask last octet: 11000000 = <strong>192</strong></div>
+          </div>
+        </div>
+
+        <div class="card technique">
+          <div class="tech-num">03</div>
+          <div class="card-label">Fit N Hosts</div>
+          <p class="tech-desc">"Need N hosts per subnet" — work backwards from the host count.</p>
+          <ol class="steps">
+            <li>Find smallest <code>2ʰ ≥ N + 2</code></li>
+            <li>That gives you h (host bits needed)</li>
+            <li>Prefix = <code>32 − h</code></li>
+          </ol>
+          <div class="example">
+            <div class="ex-label">Example</div>
+            <div class="ex-line mono">Need 50 hosts → 50+2=52</div>
+            <div class="ex-line mono">Smallest 2ʰ ≥ 52 → 2⁶=64 → h=6</div>
+            <div class="ex-line mono result">Prefix = 32−6 = <strong>/26</strong> → 62 hosts ✓</div>
+          </div>
+        </div>
+
+        <div class="card technique">
+          <div class="tech-num">04</div>
+          <div class="card-label">Fit N Subnets</div>
+          <p class="tech-desc">"Need N subnets" — borrow bits from the host side.</p>
+          <ol class="steps">
+            <li>Find smallest <code>2ˢ ≥ N</code></li>
+            <li>That gives you s (bits to borrow)</li>
+            <li>Add s to your starting prefix</li>
+          </ol>
+          <div class="example">
+            <div class="ex-label">Example</div>
+            <div class="ex-line mono">Need 6 subnets from /24</div>
+            <div class="ex-line mono">2ˢ ≥ 6 → 2³=8 → borrow 3 bits</div>
+            <div class="ex-line mono result">New prefix: /24+3 = <strong>/27</strong> → 8 subnets ✓</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CALCULATOR -->
+    <section id="calc" class="section">
+      <div class="section-header">
+        <h1>Subnet Calculator</h1>
+        <p>Enter any IP with a prefix to instantly compute all subnet details.</p>
+      </div>
+
+      <div class="card">
+        <div class="calc-input-row">
+          <div class="calc-field">
+            <label for="ip-input">IP Address / Prefix</label>
+            <input type="text" id="ip-input" class="ip-input" placeholder="192.168.10.77/27" spellcheck="false" autocomplete="off" />
+          </div>
+          <button class="calc-btn" id="calc-go">Calculate</button>
+        </div>
+        <div id="calc-err" class="calc-err"></div>
+      </div>
+
+      <div id="calc-result" class="result-grid" style="display:none">
+        <div class="card result-card">
+          <div class="result-label">Network address</div>
+          <div class="result-val mono" id="r-net"></div>
+        </div>
+        <div class="card result-card">
+          <div class="result-label">Broadcast address</div>
+          <div class="result-val mono" id="r-bcast"></div>
+        </div>
+        <div class="card result-card">
+          <div class="result-label">First usable host</div>
+          <div class="result-val mono" id="r-first"></div>
+        </div>
+        <div class="card result-card">
+          <div class="result-label">Last usable host</div>
+          <div class="result-val mono" id="r-last"></div>
+        </div>
+        <div class="card result-card">
+          <div class="result-label">Subnet mask</div>
+          <div class="result-val mono" id="r-mask"></div>
+        </div>
+        <div class="card result-card">
+          <div class="result-label">Wildcard mask</div>
+          <div class="result-val mono" id="r-wild"></div>
+        </div>
+        <div class="card result-card">
+          <div class="result-label">Usable hosts</div>
+          <div class="result-val" id="r-hosts"></div>
+        </div>
+        <div class="card result-card">
+          <div class="result-label">Block size</div>
+          <div class="result-val" id="r-block"></div>
+        </div>
+      </div>
+
+      <div id="calc-bits-card" class="card" style="display:none">
+        <div class="card-label">Bit Pattern — <span class="hl-blue">Network</span> | <span class="hl-green">Host</span></div>
+        <div class="mono bit-pattern" id="r-bits"></div>
+        <div id="r-subnet-list-wrap" style="margin-top:1.25rem">
+          <div class="card-label">Subnet List (first 8)</div>
+          <div id="r-subnet-list" class="subnet-list"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- QUIZ -->
+    <section id="quiz" class="section">
+      <div class="section-header">
+        <h1>Practice Drill</h1>
+        <p>Answer until it's reflex. Target: under 15 seconds per question.</p>
+      </div>
+
+      <div class="quiz-wrap">
+        <div class="card quiz-card">
+          <div class="quiz-meta">
+            <span class="quiz-num" id="q-num">Q1</span>
+            <span class="score-badge" id="score-disp">0 / 0</span>
+          </div>
+          <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+          <p class="q-text" id="q-text"></p>
+          <div id="q-opts" class="q-opts"></div>
+          <div id="q-feedback" class="q-feedback" style="display:none"></div>
+          <button class="next-btn" id="q-next" onclick="nextQ()" style="display:none">Next question →</button>
+        </div>
+
+        <div class="card quiz-stats">
+          <div class="stat-row">
+            <span class="stat-label">Correct</span>
+            <span class="stat-big correct" id="stat-correct">0</span>
+          </div>
+          <div class="stat-row">
+            <span class="stat-label">Wrong</span>
+            <span class="stat-big wrong" id="stat-wrong">0</span>
+          </div>
+          <div class="stat-row">
+            <span class="stat-label">Streak</span>
+            <span class="stat-big streak" id="stat-streak">0</span>
+          </div>
+          <button class="reset-btn" onclick="resetQuiz()">↺ Reset</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <span>SubnetMaster — Master Subnetting Fast</span>
+    <span>Open source · <a href="https://github.com" target="_blank">GitHub</a></span>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
