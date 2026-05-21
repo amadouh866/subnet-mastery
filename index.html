@@ -25,6 +25,10 @@
       <button class="tab" data-tab="calc">Calculator</button>
       <button class="tab" data-tab="quiz">Drill</button>
     </nav>
+    <button id="theme-toggle" class="theme-toggle-btn" title="Toggle Light/Dark Mode">
+      <span class="sun-icon">☀️</span>
+      <span class="moon-icon">🌙</span>
+    </button>
   </header>
 
   <main>
@@ -269,35 +273,59 @@
       <div id="calc-result" class="result-grid" style="display:none">
         <div class="card result-card">
           <div class="result-label">Network address</div>
-          <div class="result-val mono" id="r-net"></div>
+          <div class="result-val-row">
+            <div class="result-val mono" id="r-net"></div>
+            <button class="copy-btn" data-copy="r-net" title="Copy to clipboard">📋</button>
+          </div>
         </div>
         <div class="card result-card">
           <div class="result-label">Broadcast address</div>
-          <div class="result-val mono" id="r-bcast"></div>
+          <div class="result-val-row">
+            <div class="result-val mono" id="r-bcast"></div>
+            <button class="copy-btn" data-copy="r-bcast" title="Copy to clipboard">📋</button>
+          </div>
         </div>
         <div class="card result-card">
           <div class="result-label">First usable host</div>
-          <div class="result-val mono" id="r-first"></div>
+          <div class="result-val-row">
+            <div class="result-val mono" id="r-first"></div>
+            <button class="copy-btn" data-copy="r-first" title="Copy to clipboard">📋</button>
+          </div>
         </div>
         <div class="card result-card">
           <div class="result-label">Last usable host</div>
-          <div class="result-val mono" id="r-last"></div>
+          <div class="result-val-row">
+            <div class="result-val mono" id="r-last"></div>
+            <button class="copy-btn" data-copy="r-last" title="Copy to clipboard">📋</button>
+          </div>
         </div>
         <div class="card result-card">
           <div class="result-label">Subnet mask</div>
-          <div class="result-val mono" id="r-mask"></div>
+          <div class="result-val-row">
+            <div class="result-val mono" id="r-mask"></div>
+            <button class="copy-btn" data-copy="r-mask" title="Copy to clipboard">📋</button>
+          </div>
         </div>
         <div class="card result-card">
           <div class="result-label">Wildcard mask</div>
-          <div class="result-val mono" id="r-wild"></div>
+          <div class="result-val-row">
+            <div class="result-val mono" id="r-wild"></div>
+            <button class="copy-btn" data-copy="r-wild" title="Copy to clipboard">📋</button>
+          </div>
         </div>
         <div class="card result-card">
           <div class="result-label">Usable hosts</div>
-          <div class="result-val" id="r-hosts"></div>
+          <div class="result-val-row">
+            <div class="result-val" id="r-hosts"></div>
+            <button class="copy-btn" data-copy="r-hosts" title="Copy to clipboard">📋</button>
+          </div>
         </div>
         <div class="card result-card">
           <div class="result-label">Block size</div>
-          <div class="result-val" id="r-block"></div>
+          <div class="result-val-row">
+            <div class="result-val" id="r-block"></div>
+            <button class="copy-btn" data-copy="r-block" title="Copy to clipboard">📋</button>
+          </div>
         </div>
       </div>
 

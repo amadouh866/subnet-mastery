@@ -3,14 +3,73 @@
    ============================================================ */
 
 // ── Tab navigation ──────────────────────────────────────────
-document.querySelectorAll('.tab').forEach(btn => {
+const tabs = document.querySelectorAll('.tab');
+const sections = document.querySelectorAll('.section');
+
+function switchTab(target) {
+  tabs.forEach(t => {
+    if (t.dataset.tab === target) t.classList.add('active');
+    else t.classList.remove('active');
+  });
+  sections.forEach(s => {
+    if (s.id === target) s.classList.add('active');
+    else s.classList.remove('active');
+  });
+  if (target === 'quiz' && !quizStarted) nextQ();
+}
+
+tabs.forEach(btn => {
+  btn.addEventListener('click', () => switchTab(btn.dataset.tab));
+});
+
+// ── Theme Toggle ────────────────────────────────────────────
+const themeToggle = document.getElementById('theme-toggle');
+const root = document.documentElement;
+
+const savedTheme = localStorage.getItem('theme') || 'dark';
+root.setAttribute('data-theme', savedTheme);
+
+themeToggle.addEventListener('click', () => {
+  const currentTheme = root.getAttribute('data-theme');
+  const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+  root.setAttribute('data-theme', newTheme);
+  localStorage.setItem('theme', newTheme);
+});
+
+// ── Keyboard Shortcuts ──────────────────────────────────────
+window.addEventListener('keydown', e => {
+  // Tabs 1-5
+  if (e.key >= '1' && e.key <= '5' && !e.ctrlKey && !e.metaKey && e.target.tagName !== 'INPUT') {
+    const tabMap = ['cheatsheet', 'visual', 'technique', 'calc', 'quiz'];
+    switchTab(tabMap[parseInt(e.key) - 1]);
+  }
+
+  // Enter key behavior
+  if (e.key === 'Enter') {
+    const activeSection = document.querySelector('.section.active').id;
+    if (activeSection === 'calc') {
+      calcSubnet();
+    } else if (activeSection === 'quiz') {
+      if (answered) nextQ();
+      // Quiz options are handled by their own listeners, but we could add focus logic here if needed
+    }
+  }
+});
+
+// ── Copy to Clipboard ───────────────────────────────────────
+document.querySelectorAll('.copy-btn').forEach(btn => {
   btn.addEventListener('click', () => {
-    const target = btn.dataset.tab;
-    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-    btn.classList.add('active');
-    document.getElementById(target).classList.add('active');
-    if (target === 'quiz' && !quizStarted) nextQ();
+    const targetId = btn.dataset.copy;
+    const text = document.getElementById(targetId).textContent;
+    navigator.clipboard.writeText(text).then(() => {
+      const originalText = btn.textContent;
+      btn.textContent = '✅';
+      btn.classList.add('copied');
+      setTimeout(() => {
+        btn.textContent = originalText;
+        btn.classList.remove('copied');
+      }, 1500);
+    });
   });
 });
 
