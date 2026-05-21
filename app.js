@@ -339,15 +339,16 @@ function initQuiz() {
 function nextQ() {
   quizStarted = true;
   answered = false;
-  const qNum = total % order.length;
+  const qNum = total % filteredQuestions.length;
+  // If we finished the set once, shuffle again for variety
   if (qNum === 0 && total > 0) order = shuffle([...Array(filteredQuestions.length).keys()]);
 
   const q = filteredQuestions[order[qNum]];
-  document.getElementById('q-num').textContent = `Q${total + 1}`;
+  document.getElementById('q-num').textContent = `Question ${qNum + 1} / ${filteredQuestions.length}`;
   document.getElementById('q-text').textContent = q.q;
   document.getElementById('q-feedback').style.display = 'none';
   document.getElementById('q-next').style.display = 'none';
-  document.getElementById('progress-fill').style.width = `${(qNum / filteredQuestions.length) * 100}%`;
+  document.getElementById('progress-fill').style.width = `${((qNum + 1) / filteredQuestions.length) * 100}%`;
 
   const idxMap = shuffle([0, 1, 2, 3]);
   const optsEl = document.getElementById('q-opts');
@@ -370,7 +371,7 @@ function nextQ() {
       fb.innerHTML = `<span class="${isCorrect ? 'correct' : 'wrong'}">${isCorrect ? '✓ Correct!' : '✗ Wrong.'}</span> ${q.exp}`;
       fb.style.display = 'block';
       
-      document.getElementById('score-disp').textContent = `${score} / ${total}`;
+      document.getElementById('score-disp').textContent = `Score: ${score} / ${total}`;
       document.getElementById('stat-correct').textContent = score;
       document.getElementById('stat-wrong').textContent = total - score;
       document.getElementById('stat-streak').textContent = streak;
@@ -384,7 +385,7 @@ function resetQuiz() {
   score = 0; total = 0; streak = 0;
   answered = false;
   order = shuffle([...Array(filteredQuestions.length).keys()]);
-  document.getElementById('score-disp').textContent = '0 / 0';
+  document.getElementById('score-disp').textContent = `Score: 0 / 0`;
   document.getElementById('stat-correct').textContent = '0';
   document.getElementById('stat-wrong').textContent = '0';
   document.getElementById('stat-streak').textContent = '0';
