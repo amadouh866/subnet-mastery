@@ -553,3 +553,22 @@ footer a:hover { text-decoration: underline; }
   filter: grayscale(0);
   transform: scale(1.2);
 }
+
+/* ── VLSM ── */
+.vlsm-reqs { display: flex; flex-direction: column; gap: 8px; }
+.vlsm-req-row { display: flex; gap: 8px; align-items: center; }
+.vlsm-name { flex: 2; }
+.vlsm-hosts { flex: 1; }
+.table-scroll { overflow-x: auto; margin-top: 0.5rem; }
+#vlsm-table th { white-space: nowrap; }
+#vlsm-table td { font-family: var(--font-mono); }
+
+/* ── Quiz Filters ── */
+.quiz-setup .pill {
+  border: 1px solid var(--border);
+  background: var(--bg3);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.quiz-setup .pill:hover { border-color: var(--accent); }
+.quiz-setup .pill.active { background: var(--accent-glow); border-color: var(--accent); color: var(--accent); }

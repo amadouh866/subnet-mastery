@@ -6,54 +6,55 @@
 // ── State & Data ───────────────────────────────────────────
 const questions = [
   { q: "What is the block size for a /28 subnet?",
-    opts: ["16", "32", "8", "64"], ans: 0,
+    opts: ["16", "32", "8", "64"], ans: 0, cat: "calc",
     exp: "Block size = 256 − 240 = 16. A /28 has a last octet mask of 240." },
   { q: "How many usable hosts does a /26 subnet support?",
-    opts: ["62", "64", "30", "126"], ans: 0,
+    opts: ["62", "64", "30", "126"], ans: 0, cat: "hosts",
     exp: "2⁶ = 64 total addresses, minus network and broadcast = 62 usable hosts." },
   { q: "IP: 172.16.45.200/27 — what is the network address?",
-    opts: ["172.16.45.192", "172.16.45.128", "172.16.45.160", "172.16.45.224"], ans: 0,
+    opts: ["172.16.45.192", "172.16.45.128", "172.16.45.160", "172.16.45.224"], ans: 0, cat: "calc",
     exp: "Block = 32. Multiples: 0, 32, 64, 96, 128, 160, 192, 224. 200 falls in 192–223 → network is 172.16.45.192." },
   { q: "You need 30 subnets from a /24. What prefix should you use?",
-    opts: ["/29", "/27", "/28", "/30"], ans: 0,
+    opts: ["/29", "/27", "/28", "/30"], ans: 0, cat: "hosts",
     exp: "2⁵ = 32 ≥ 30 → borrow 5 bits → /24 + 5 = /29. Gives 32 subnets of 6 hosts each." },
   { q: "What is the subnet mask for /29?",
-    opts: ["255.255.255.248", "255.255.255.252", "255.255.255.240", "255.255.255.224"], ans: 0,
+    opts: ["255.255.255.248", "255.255.255.252", "255.255.255.240", "255.255.255.224"], ans: 0, cat: "mask",
     exp: "32 − 29 = 3 host bits. Mask last octet: 11111000 in binary = 248." },
   { q: "IP 10.0.0.130/25 — what is the broadcast address?",
-    opts: ["10.0.0.255", "10.0.0.127", "10.0.0.254", "10.0.0.253"], ans: 0,
+    opts: ["10.0.0.255", "10.0.0.127", "10.0.0.254", "10.0.0.253"], ans: 0, cat: "calc",
     exp: "Block = 128. 130 falls in the 128–255 range. Broadcast = 255." },
   { q: "You need to accommodate 100 hosts per subnet. Best prefix?",
-    opts: ["/25", "/26", "/27", "/24"], ans: 0,
+    opts: ["/25", "/26", "/27", "/24"], ans: 0, cat: "hosts",
     exp: "100 + 2 = 102. Smallest 2ʰ ≥ 102 → 2⁷ = 128 → h = 7 → /32 − 7 = /25 → 126 usable hosts." },
   { q: "How many subnets does a /27 create from a /24?",
-    opts: ["8", "4", "16", "32"], ans: 0,
+    opts: ["8", "4", "16", "32"], ans: 0, cat: "hosts",
     exp: "Borrowed bits = 27 − 24 = 3 → 2³ = 8 subnets, each with 30 hosts." },
   { q: "What is the wildcard mask for /26?",
-    opts: ["0.0.0.63", "0.0.0.31", "0.0.0.127", "0.0.0.191"], ans: 0,
+    opts: ["0.0.0.63", "0.0.0.31", "0.0.0.127", "0.0.0.191"], ans: 0, cat: "mask",
     exp: "Wildcard = inverse of subnet mask. /26 mask last octet = 192. Wildcard = 255 − 192 = 63." },
   { q: "IP: 192.168.1.100/28 — first usable host?",
-    opts: ["192.168.1.97", "192.168.1.96", "192.168.1.98", "192.168.1.113"], ans: 0,
+    opts: ["192.168.1.97", "192.168.1.96", "192.168.1.98", "192.168.1.113"], ans: 0, cat: "calc",
     exp: "Block = 16. 100 falls in 96–111. Network = 96, first usable host = 97." },
   { q: "What is the CIDR notation for mask 255.255.255.224?",
-    opts: ["/27", "/26", "/28", "/25"], ans: 0,
+    opts: ["/27", "/26", "/28", "/25"], ans: 0, cat: "mask",
     exp: "224 = 11100000 in binary → 3 host bits → 32 − 3 = /27." },
   { q: "How many usable hosts per subnet in a /30?",
-    opts: ["2", "4", "6", "14"], ans: 0,
+    opts: ["2", "4", "6", "14"], ans: 0, cat: "hosts",
     exp: "2⁽³²⁻³⁰⁾ = 2² = 4 total − 2 = 2 usable hosts. Common for point-to-point links." },
   { q: "IP: 10.1.1.1/8 — what is the broadcast address?",
-    opts: ["10.255.255.255", "10.1.255.255", "10.0.0.255", "10.1.1.255"], ans: 0,
+    opts: ["10.255.255.255", "10.1.255.255", "10.0.0.255", "10.1.1.255"], ans: 0, cat: "calc",
     exp: "A /8 mask = 255.0.0.0. Network = 10.0.0.0. Broadcast = all host bits set = 10.255.255.255." },
   { q: "What does the 'interesting octet' mean in subnetting?",
-    opts: ["The octet where subnetting occurs (not 0 or 255)", "The octet with the highest value", "Always the last octet", "The first octet in the IP"], ans: 0,
+    opts: ["The octet where subnetting occurs (not 0 or 255)", "The octet with the highest value", "Always the last octet", "The first octet in the IP"], ans: 0, cat: "mask",
     exp: "The interesting octet is the one that is neither 0 nor 255 in the subnet mask — that's where you calculate block size." },
   { q: "You have 192.168.5.0/24 and need 4 equal subnets. What mask?",
-    opts: ["/26", "/27", "/25", "/28"], ans: 0,
+    opts: ["/26", "/27", "/25", "/28"], ans: 0, cat: "hosts",
     exp: "2² = 4 subnets → borrow 2 bits → /24 + 2 = /26. Each subnet has 64 addresses, 62 usable." },
 ];
 
 let score = 0, total = 0, streak = 0, quizStarted = false, answered = false;
 let order = [];
+let filteredQuestions = [];
 
 // ── Utility Functions ──────────────────────────────────────
 function shuffle(arr) {
@@ -298,22 +299,52 @@ function calcSubnet() {
 }
 
 function initQuiz() {
-  order = shuffle([...Array(questions.length).keys()]);
-  document.querySelector('.reset-btn').addEventListener('click', resetQuiz);
+  const setupEl = document.getElementById('quiz-setup');
+  const activeEl = document.getElementById('quiz-active');
+  const startBtn = document.getElementById('quiz-start-btn');
+  const filterBtns = document.querySelectorAll('#quiz-filters .pill');
+
+  let currentFilter = 'all';
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentFilter = btn.dataset.filter;
+    });
+  });
+
+  startBtn.addEventListener('click', () => {
+    filteredQuestions = currentFilter === 'all' 
+      ? [...questions] 
+      : questions.filter(q => q.cat === currentFilter);
+    
+    if (filteredQuestions.length === 0) return;
+
+    setupEl.style.display = 'none';
+    activeEl.style.display = 'block';
+    resetQuiz();
+  });
+
+  document.querySelector('.reset-btn').addEventListener('click', () => {
+    setupEl.style.display = 'block';
+    activeEl.style.display = 'none';
+    quizStarted = false;
+  });
 }
 
 function nextQ() {
   quizStarted = true;
   answered = false;
   const qNum = total % order.length;
-  if (qNum === 0 && total > 0) order = shuffle([...Array(questions.length).keys()]);
+  if (qNum === 0 && total > 0) order = shuffle([...Array(filteredQuestions.length).keys()]);
 
-  const q = questions[order[qNum]];
+  const q = filteredQuestions[order[qNum]];
   document.getElementById('q-num').textContent = `Q${total + 1}`;
   document.getElementById('q-text').textContent = q.q;
   document.getElementById('q-feedback').style.display = 'none';
   document.getElementById('q-next').style.display = 'none';
-  document.getElementById('progress-fill').style.width = `${(qNum / questions.length) * 100}%`;
+  document.getElementById('progress-fill').style.width = `${(qNum / filteredQuestions.length) * 100}%`;
 
   const idxMap = shuffle([0, 1, 2, 3]);
   const optsEl = document.getElementById('q-opts');
@@ -348,8 +379,8 @@ function nextQ() {
 
 function resetQuiz() {
   score = 0; total = 0; streak = 0;
-  quizStarted = false; answered = false;
-  order = shuffle([...Array(questions.length).keys()]);
+  answered = false;
+  order = shuffle([...Array(filteredQuestions.length).keys()]);
   document.getElementById('score-disp').textContent = '0 / 0';
   document.getElementById('stat-correct').textContent = '0';
   document.getElementById('stat-wrong').textContent = '0';
@@ -363,6 +394,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initUI();
   initBitVisualizer();
   initQuiz();
+  initVLSM();
 
   const ipInput = document.getElementById('ip-input');
   const calcGo = document.getElementById('calc-go');
@@ -373,3 +405,133 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (document.getElementById('quiz').classList.contains('active')) nextQ();
 });
+
+function initVLSM() {
+  const addBtn = document.getElementById('vlsm-add-row');
+  const goBtn = document.getElementById('vlsm-go');
+  const container = document.getElementById('vlsm-reqs-container');
+  const exportBtn = document.getElementById('vlsm-export');
+
+  let lanCount = 1;
+
+  addBtn.addEventListener('click', () => {
+    lanCount++;
+    const row = document.createElement('div');
+    row.className = 'vlsm-req-row';
+    row.innerHTML = `
+      <input type="text" class="vlsm-name ip-input" placeholder="LAN Name" value="LAN ${lanCount}" />
+      <input type="number" class="vlsm-hosts ip-input" placeholder="Hosts" value="10" min="1" />
+      <button class="reset-btn remove-req" onclick="this.parentElement.remove()" style="width:auto;padding:8px">✕</button>
+    `;
+    container.appendChild(row);
+  });
+
+  goBtn.addEventListener('click', runVLSM);
+  exportBtn.addEventListener('click', exportVLSM);
+}
+
+function runVLSM() {
+  const baseIpRaw = document.getElementById('vlsm-base-ip').value.trim();
+  const errEl = document.getElementById('vlsm-base-err');
+  const resultWrap = document.getElementById('vlsm-result-wrap');
+  const tbody = document.querySelector('#vlsm-table tbody');
+  
+  errEl.textContent = '';
+  resultWrap.style.display = 'none';
+  tbody.innerHTML = '';
+
+  const m = baseIpRaw.match(/^(\d+)\.(\d+)\.(\d+)\.(\d+)\/(\d+)$/);
+  if (!m) { errEl.textContent = 'Format: 192.168.1.0/24'; return; }
+
+  const [, a, b, c, d, pfx] = m.map(Number);
+  let currentIp = toNum(a, b, c, d);
+  const majorMask = pfx === 0 ? 0 : ((0xFFFFFFFF << (32 - pfx)) >>> 0);
+  const majorNet = (currentIp & majorMask) >>> 0;
+  const majorEnd = (majorNet + Math.pow(2, 32 - pfx) - 1) >>> 0;
+
+  // Gather requirements
+  const reqRows = document.querySelectorAll('.vlsm-req-row');
+  const reqs = Array.from(reqRows).map(row => ({
+    name: row.querySelector('.vlsm-name').value || 'Unnamed',
+    hosts: parseInt(row.querySelector('.vlsm-hosts').value) || 0
+  })).filter(r => r.hosts > 0);
+
+  if (reqs.length === 0) { errEl.textContent = 'Add at least one subnet requirement.'; return; }
+
+  // Sort requirements by host count descending (key for VLSM)
+  reqs.sort((a, b) => b.hosts - a.hosts);
+
+  const results = [];
+  let currentStart = majorNet;
+
+  for (const req of reqs) {
+    // Find smallest power of 2 that fits (req.hosts + 2)
+    const needed = req.hosts + 2;
+    const h = Math.ceil(Math.log2(needed));
+    const size = Math.pow(2, h);
+    const subnetPfx = 32 - h;
+    
+    if (currentStart + size - 1 > majorEnd) {
+      errEl.textContent = 'Error: Requirements exceed major network capacity.';
+      return;
+    }
+
+    const net = currentStart;
+    const bcast = (net + size - 1) >>> 0;
+    const mask = fromNum(h === 0 ? 0xFFFFFFFF : ((0xFFFFFFFF << (32 - h)) >>> 0)); // wait, mask is for subnetPfx
+    const maskBits = subnetPfx === 0 ? 0 : ((0xFFFFFFFF << (32 - subnetPfx)) >>> 0);
+    const maskOcts = fromNum(maskBits);
+
+    results.push({
+      name: req.name,
+      needed: req.hosts,
+      allocated: size - 2,
+      net: fromNum(net).join('.'),
+      pfx: subnetPfx,
+      mask: maskOcts.join('.'),
+      range: `${fromNum(net + 1).join('.')} - ${fromNum(bcast - 1).join('.')}`,
+      bcast: fromNum(bcast).join('.')
+    });
+
+    currentStart = (bcast + 1) >>> 0;
+  }
+
+  // Render results
+  results.forEach(res => {
+    const row = document.createElement('tr');
+    row.innerHTML = `
+      <td>${res.name}</td>
+      <td>${res.needed}</td>
+      <td>${res.allocated}</td>
+      <td>${res.net}</td>
+      <td>/${res.pfx}</td>
+      <td>${res.mask}</td>
+      <td><small>${res.range}</small></td>
+      <td>${res.bcast}</td>
+    `;
+    tbody.appendChild(row);
+  });
+
+  resultWrap.style.display = 'block';
+}
+
+function exportVLSM() {
+  const table = document.getElementById('vlsm-table');
+  let csv = [];
+  const rows = table.querySelectorAll('tr');
+  
+  for (const row of rows) {
+    const cols = row.querySelectorAll('th, td');
+    const rowData = Array.from(cols).map(c => `"${c.textContent}"`).join(',');
+    csv.push(rowData);
+  }
+
+  const csvContent = "data:text/csv;charset=utf-8," + csv.join("\n");
+  const encodedUri = encodeURI(csvContent);
+  const link = document.createElement("a");
+  link.setAttribute("href", encodedUri);
+  link.setAttribute("download", "subnet_plan.csv");
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}

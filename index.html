@@ -23,6 +23,7 @@
       <button class="tab" data-tab="visual" role="tab" aria-selected="false">Bit Visualizer</button>
       <button class="tab" data-tab="technique" role="tab" aria-selected="false">Techniques</button>
       <button class="tab" data-tab="calc" role="tab" aria-selected="false">Calculator</button>
+      <button class="tab" data-tab="vlsm" role="tab" aria-selected="false">VLSM</button>
       <button class="tab" data-tab="quiz" role="tab" aria-selected="false">Drill</button>
     </nav>
     <button id="theme-toggle" class="theme-toggle-btn" title="Toggle Light/Dark Mode" aria-label="Toggle Light/Dark Mode">
@@ -339,6 +340,66 @@
       </div>
     </section>
 
+    <!-- VLSM CALCULATOR -->
+    <section id="vlsm" class="section">
+      <div class="section-header">
+        <h1>VLSM Calculator</h1>
+        <p>Divide a network into variable-sized subnets based on host requirements.</p>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-label">Major Network</div>
+          <div class="calc-input-row">
+            <div class="calc-field">
+              <label for="vlsm-base-ip">Base IP / Prefix</label>
+              <input type="text" id="vlsm-base-ip" class="ip-input" placeholder="192.168.1.0/24" spellcheck="false" autocomplete="off" />
+            </div>
+          </div>
+          <div id="vlsm-base-err" class="calc-err"></div>
+        </div>
+
+        <div class="card">
+          <div class="card-label">Subnet Requirements</div>
+          <div id="vlsm-reqs-container" class="vlsm-reqs">
+            <div class="vlsm-req-row">
+              <input type="text" class="vlsm-name ip-input" placeholder="LAN Name" value="LAN 1" />
+              <input type="number" class="vlsm-hosts ip-input" placeholder="Hosts" value="50" min="1" />
+              <button class="reset-btn remove-req" onclick="this.parentElement.remove()" style="width:auto;padding:8px">✕</button>
+            </div>
+          </div>
+          <button class="next-btn" id="vlsm-add-row" style="margin-top:1rem;background:var(--bg3);color:var(--text);border:1px solid var(--border-hi)">+ Add Subnet</button>
+          <button class="calc-btn" id="vlsm-go" style="margin-top:1rem;width:100%">Generate Plan</button>
+        </div>
+      </div>
+
+      <div id="vlsm-result-wrap" style="display:none">
+        <div class="card">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem">
+            <div class="card-label" style="margin-bottom:0">Subnetting Plan</div>
+            <button class="calc-btn" id="vlsm-export" style="padding:6px 16px;font-size:12px">📥 Export CSV</button>
+          </div>
+          <div class="table-scroll">
+            <table id="vlsm-table">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Needed</th>
+                  <th>Allocated</th>
+                  <th>Network</th>
+                  <th>CIDR</th>
+                  <th>Mask</th>
+                  <th>Range</th>
+                  <th>Broadcast</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- QUIZ -->
     <section id="quiz" class="section">
       <div class="section-header">
@@ -348,15 +409,28 @@
 
       <div class="quiz-wrap">
         <div class="card quiz-card">
-          <div class="quiz-meta">
-            <span class="quiz-num" id="q-num">Q1</span>
-            <span class="score-badge" id="score-disp">0 / 0</span>
+          <div id="quiz-setup" class="quiz-setup">
+            <div class="card-label">Quiz Configuration</div>
+            <div class="pill-row" id="quiz-filters" style="margin-bottom:1rem">
+              <button class="pill active" data-filter="all">All Questions</button>
+              <button class="pill" data-filter="mask">Masks & CIDR</button>
+              <button class="pill" data-filter="hosts">Host Counts</button>
+              <button class="pill" data-filter="calc">Subnet Calc</button>
+            </div>
+            <button class="calc-btn" id="quiz-start-btn" style="width:100%">Start Practice</button>
           </div>
-          <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
-          <p class="q-text" id="q-text"></p>
-          <div id="q-opts" class="q-opts"></div>
-          <div id="q-feedback" class="q-feedback" style="display:none"></div>
-          <button class="next-btn" id="q-next" onclick="nextQ()" style="display:none">Next question →</button>
+
+          <div id="quiz-active" style="display:none">
+            <div class="quiz-meta">
+              <span class="quiz-num" id="q-num">Q1</span>
+              <span class="score-badge" id="score-disp">0 / 0</span>
+            </div>
+            <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+            <p class="q-text" id="q-text"></p>
+            <div id="q-opts" class="q-opts"></div>
+            <div id="q-feedback" class="q-feedback" style="display:none"></div>
+            <button class="next-btn" id="q-next" onclick="nextQ()" style="display:none">Next question →</button>
+          </div>
         </div>
 
         <div class="card quiz-stats">
