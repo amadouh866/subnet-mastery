@@ -171,6 +171,7 @@ function initBitVisualizer() {
   function updateBits(prefix) {
     prefix = parseInt(prefix);
     pfxDisp.textContent = prefix;
+    pfxSlider.value = prefix; // Sync slider if called from bit click
     const mask = ipToMaskOctets(prefix);
     document.getElementById('vis-mask').textContent = mask.join('.');
 
@@ -201,6 +202,8 @@ function initBitVisualizer() {
         const cell = document.createElement('div');
         cell.className = `bit-cell ${isNet ? 'net' : 'host'}`;
         cell.textContent = val;
+        cell.title = `Bit ${pos + 1} - Click to set boundary here`;
+        cell.onclick = () => updateBits(pos + 1);
         group.appendChild(cell);
       }
       container.appendChild(group);
