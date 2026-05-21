@@ -1,0 +1,26 @@
+{
+  "name": "SubnetMaster — Master Subnetting Fast",
+  "short_name": "SubnetMaster",
+  "description": "A fast, interactive subnetting mastery tool — cheat sheet, bit visualizer, techniques, calculator, and quiz drill.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0a0c10",
+  "theme_color": "#00d4aa",
+  "icons": [
+    {
+      "src": "https://cdn.jsdelivr.net/gh/twitter/twemoji@latest/assets/72x72/2b21.png",
+      "sizes": "72x72",
+      "type": "image/png"
+    },
+    {
+      "src": "https://cdn.jsdelivr.net/gh/twitter/twemoji@latest/assets/128x128/2b21.png",
+      "sizes": "128x128",
+      "type": "image/png"
+    },
+    {
+      "src": "https://cdn.jsdelivr.net/gh/twitter/twemoji@latest/assets/512x512/2b21.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

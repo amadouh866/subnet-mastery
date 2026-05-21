@@ -18,16 +18,16 @@
       <span class="logo-icon">⬡</span>
       <span class="logo-text">SubnetMaster</span>
     </div>
-    <nav class="tab-bar">
-      <button class="tab active" data-tab="cheatsheet">Cheat Sheet</button>
-      <button class="tab" data-tab="visual">Bit Visualizer</button>
-      <button class="tab" data-tab="technique">Techniques</button>
-      <button class="tab" data-tab="calc">Calculator</button>
-      <button class="tab" data-tab="quiz">Drill</button>
+    <nav class="tab-bar" role="tablist">
+      <button class="tab active" data-tab="cheatsheet" role="tab" aria-selected="true">Cheat Sheet</button>
+      <button class="tab" data-tab="visual" role="tab" aria-selected="false">Bit Visualizer</button>
+      <button class="tab" data-tab="technique" role="tab" aria-selected="false">Techniques</button>
+      <button class="tab" data-tab="calc" role="tab" aria-selected="false">Calculator</button>
+      <button class="tab" data-tab="quiz" role="tab" aria-selected="false">Drill</button>
     </nav>
-    <button id="theme-toggle" class="theme-toggle-btn" title="Toggle Light/Dark Mode">
-      <span class="sun-icon">☀️</span>
-      <span class="moon-icon">🌙</span>
+    <button id="theme-toggle" class="theme-toggle-btn" title="Toggle Light/Dark Mode" aria-label="Toggle Light/Dark Mode">
+      <span class="sun-icon" aria-hidden="true">☀️</span>
+      <span class="moon-icon" aria-hidden="true">🌙</span>
     </button>
   </header>
 
@@ -384,5 +384,14 @@
   </footer>
 
   <script src="app.js"></script>
+  <script>
+    if ('serviceWorker' in navigator && window.location.protocol === 'https:') {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js')
+          .then(reg => console.log('SW registered'))
+          .catch(err => console.log('SW registration failed', err));
+      });
+    }
+  </script>
 </body>
 </html>
