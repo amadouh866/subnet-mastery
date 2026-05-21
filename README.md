@@ -1,81 +1,49 @@
 # SubnetMaster 🌐
 
-A fast, interactive subnetting mastery tool — cheat sheet, bit visualizer, techniques, calculator, and quiz drill. No frameworks, no build step. Pure HTML + CSS + JS.
+A fast, interactive, and professional subnetting mastery tool — designed for students and network engineers. No frameworks, no build step. Pure HTML + CSS + JS.
 
-## Features
+**Live Demo:** [https://amadouh866.github.io/subnet-mastery/](https://amadouh866.github.io/subnet-mastery/)
 
-- **Cheat Sheet** — powers of 2, CIDR ↔ mask ↔ block size tables, formulas, private ranges
-- **Bit Visualizer** — drag a slider to see network/host bit split in real time
-- **4 Techniques** — block size shortcut, counting host bits, fit N hosts, fit N subnets
-- **Calculator** — enter any IP/prefix and get full subnet details + bit pattern + subnet list
-- **Practice Drill** — 15 shuffled questions with score tracking and streak counter
+## 🚀 Key Features
 
-## Usage (local)
+- **Cheat Sheet** — Powers of 2, CIDR ↔ mask ↔ block size tables, formulas, and private ranges.
+- **Interactive Bit Visualizer** — Click individual bits or use the slider to shift the network/host boundary in real-time.
+- **Standard Calculator** — Enter any IP/prefix for instant subnet details (Network, Broadcast, Range, Mask, Wildcard).
+- **VLSM Calculator** — Generate complex subnetting plans based on custom host requirements for multiple LANs.
+- **Practice Drill (Quiz)** — Shuffled questions with category filters (Masks, Hosts, Calc), score tracking, and streaks.
+- **Export Data** — Download your VLSM subnetting plans as CSV files.
+- **Dark/Light Mode** — Seamless theme switching with persistent user preference.
+- **PWA Ready** — Installable on mobile and desktop. Works **offline** once cached.
+- **Keyboard Shortcuts** — Navigate tabs with `1-5` and use `Enter` for calculations and quiz flow.
 
-Just open `index.html` in any browser — no server needed.
+## 📱 Installation (PWA)
+
+Since this is a Progressive Web App, you can install it on your device:
+- **Mobile:** Open the link in Chrome/Safari and select "Add to Home Screen".
+- **Desktop:** Click the "Install" icon in the browser address bar.
+
+## 🛠 Usage (local)
+
+Just open `index.html` in any modern browser.
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/subnet-mastery.git
+git clone https://github.com/amadouh866/subnet-mastery.git
 cd subnet-mastery
-open index.html   # macOS
-# or
-start index.html  # Windows
+# No installation required, just open index.html
 ```
 
-## Deploy to GitHub Pages
-
-### Option 1 — From GitHub UI (easiest)
-
-1. Push this repo to GitHub
-2. Go to **Settings → Pages**
-3. Under *Source*, select **Deploy from a branch**
-4. Select `main` branch, `/ (root)` folder
-5. Click **Save**
-6. Your site will be live at `https://YOUR_USERNAME.github.io/subnet-mastery/`
-
-### Option 2 — GitHub CLI
-
-```bash
-gh repo create subnet-mastery --public --push --source=.
-# Then enable Pages in the repo settings
-```
-
-### Option 3 — Git commands
-
-```bash
-git init
-git add .
-git commit -m "Initial commit"
-git branch -M main
-git remote add origin https://github.com/YOUR_USERNAME/subnet-mastery.git
-git push -u origin main
-```
-
-Then enable GitHub Pages in repository Settings → Pages.
-
-## Deploy to Netlify (one-click)
-
-1. Go to [netlify.com](https://netlify.com)
-2. Drag and drop this folder onto the Netlify dashboard
-3. Done — live URL in seconds
-
-## Deploy to Vercel
-
-```bash
-npm i -g vercel
-vercel
-```
-
-## File Structure
+## 📁 File Structure
 
 ```
 subnet-mastery/
-├── index.html   # App shell + all markup
-├── style.css    # Dark terminal aesthetic
-├── app.js       # All logic (no dependencies)
-└── README.md    # This file
+├── index.html     # App shell, markup & PWA registration
+├── style.css      # Dark/Light themes and responsive layout
+├── app.js         # Unified logic (Calculations, VLSM, Quiz, UI)
+├── manifest.json  # PWA configuration
+├── sw.js          # Service Worker for offline support
+└── .nojekyll      # Ensures proper hosting on GitHub Pages
 ```
 
-## License
+## 📜 License
 
 MIT — free to use, share, and modify.
